@@ -52,22 +52,31 @@ function setText(ids, value) {
   if (element) element.textContent = value;
 }
 
-function getMarkets() {
-  return demoMarkets[state.market] || demoMarkets.stocks;
+async function getMarkets() {
+  const response = await fetch("https://fiachras-trading-api.onrender.com/api/markets");
+
+  if (!response.ok) {
+    throw new Error("Failed to load markets");
+  }
+
+  const data = await response.json();
+
+  return data[state.market] || data.stocks || [];
 }
 
-function getSelectedMarket() {
-  const markets = getMarkets();
+async function getSelectedMarket() {
+  const markets = await getMarkets();
 
   return (
-    markets.find(item => item.symbol.toUpperCase() === state.symbol.toUpperCase()) ||
-    markets[0]
+    markets.find(
+      item => item.symbol.toUpperCase() === state.symbol.toUpperCase()
+    ) || markets[0]
   );
 }
 
-function updateMainPrice() {
-  const market = getSelectedMarket();
 
+async function updateMainPrice() {
+    const market = await getSelectedMarket();
   if (!market) return;
 
   setText(
@@ -210,8 +219,8 @@ function drawChart() {
   ctx.fill();
 }
 
-function updateDecision() {
-  const market = getSelectedMarket();
+async function updateDecision() {
+    const market = await getSelectedMarket();
 
   if (!market) return;
 
