@@ -1,8 +1,13 @@
 {
-  "name":"fiachras-trade-advice-2.0",
-  "version":"1.0.0",
-  "private":true,
-  "type":"module",
-  "scripts":{"start":"node backend/server.js"},
-  "dependencies":{"express":"^5.1.0"}
+  "name": "fiachras-trade-advice-2.0",
+  "version": "1.0.0",
+  "description": "Fiachra's professional trading and market intelligence platform",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node backend/server.js"
+  },
+  "dependencies": {
+    "express": "^5.1.0"
+  }
 }
