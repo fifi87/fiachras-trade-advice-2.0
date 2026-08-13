@@ -1,20 +1,408 @@
- <b>Live market data:</b>
-      Fiachra's Tradin will use a secure backend for market-data
-      connections. API keys will never be stored inside this public
-      website.
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <title>Fiachra's Trading Terminal</title>
+
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+
+<div class="app">
+
+  <!-- TOP BAR -->
+  <header class="top">
+
+    <div class="logo">
+      Fiachra's <span>Trading</span>
     </div>
 
+    <div class="live">
+      <span class="live-dot"></span>
+      LIVE MARKET
+    </div>
 
-    <footer>
-      Fiachra's Tradin • Founded by Fiachra Gardner •
-      Educational market dashboard, not financial advice.
-    </footer>
+    <div class="search">
+      <input
+        id="symbolInput"
+        type="text"
+        value="AMZN"
+        placeholder="Search stock, crypto or currency..."
+        aria-label="Search market"
+      >
+    </div>
 
-  </main>
+    <nav class="nav">
+      <button class="active">Terminal</button>
+      <button>Markets</button>
+      <button>Research</button>
+    </nav>
+
+  </header>
 
 
-  <script src="app.js"></script>
+  <!-- BODY -->
+  <div class="body">
+
+    <!-- SIDE BAR -->
+    <aside class="rail">
+
+      <button class="active" title="Terminal">⌁</button>
+      <button title="Stocks">◇</button>
+      <button title="Markets">▥</button>
+      <button title="Currencies">◎</button>
+      <button title="Settings">⚙</button>
+
+    </aside>
+
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+
+      <!-- CURRENT MARKET -->
+      <section class="ticker">
+
+        <div>
+          <div class="symbol" id="currentSymbol">AMZN</div>
+          <div class="muted">AMAZON • STOCK</div>
+        </div>
+
+        <div class="price" id="currentPrice">
+          $0.00
+        </div>
+
+        <div class="change green" id="currentChange">
+          +0.00%
+        </div>
+
+        <div class="timeframes">
+          <button>1m</button>
+          <button>5m</button>
+          <button class="active">15m</button>
+          <button>1h</button>
+          <button>4h</button>
+          <button>1D</button>
+        </div>
+
+      </section>
+
+
+      <!-- MAIN GRID -->
+      <section class="grid">
+
+        <!-- PRICE CHART -->
+        <div class="panel chart-panel">
+
+          <div class="panel-header">
+
+            <div class="panel-title">
+              PRICE
+            </div>
+
+            <div class="panel-subtitle">
+              LIVE MARKET DATA
+            </div>
+
+          </div>
+
+          <div class="chart">
+            <canvas id="priceChart"></canvas>
+          </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+        <div>
+
+          <!-- WATCHLIST -->
+          <div class="panel">
+
+            <div class="panel-header">
+
+              <div class="panel-title">
+                WATCHLIST
+              </div>
+
+              <div class="panel-subtitle">
+                LIVE
+              </div>
+
+            </div>
+
+
+            <div class="watchlist">
+
+              <!-- AMAZON -->
+              <div class="watch-item">
+
+                <div>
+                  <div class="watch-symbol">
+                    AMZN
+                  </div>
+
+                  <div class="watch-type">
+                    Stock • Amazon
+                  </div>
+                </div>
+
+                <div>
+                  <div class="watch-price" id="amazonPrice">
+                    —
+                  </div>
+
+                  <div class="watch-change green">
+                    —
+                  </div>
+                </div>
+
+              </div>
+
+
+              <!-- S&P 500 -->
+              <div class="watch-item">
+
+                <div>
+                  <div class="watch-symbol">
+                    SPX
+                  </div>
+
+                  <div class="watch-type">
+                    Stock Index
+                  </div>
+                </div>
+
+                <div>
+                  <div class="watch-price" id="sp500Price">
+                    —
+                  </div>
+
+                  <div class="watch-change">
+                    —
+                  </div>
+                </div>
+
+              </div>
+
+
+              <!-- BITCOIN -->
+              <div class="watch-item">
+
+                <div>
+                  <div class="watch-symbol">
+                    BTC/USD
+                  </div>
+
+                  <div class="watch-type">
+                    Crypto
+                  </div>
+                </div>
+
+                <div>
+                  <div class="watch-price" id="bitcoinPrice">
+                    —
+                  </div>
+
+                  <div class="watch-change">
+                    —
+                  </div>
+                </div>
+
+              </div>
+
+
+              <!-- EUR/USD -->
+              <div class="watch-item">
+
+                <div>
+                  <div class="watch-symbol">
+                    EUR/USD
+                  </div>
+
+                  <div class="watch-type">
+                    Currency
+                  </div>
+                </div>
+
+                <div>
+                  <div class="watch-price" id="eurusdPrice">
+                    —
+                  </div>
+
+                  <div class="watch-change">
+                    —
+                  </div>
+                </div>
+
+              </div>
+
+
+              <!-- GBP/USD -->
+              <div class="watch-item">
+
+                <div>
+                  <div class="watch-symbol">
+                    GBP/USD
+                  </div>
+
+                  <div class="watch-type">
+                    Currency
+                  </div>
+                </div>
+
+                <div>
+                  <div class="watch-price" id="gbpusdPrice">
+                    —
+                  </div>
+
+                  <div class="watch-change">
+                    —
+                  </div>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- AI DECISION -->
+          <div class="panel decision">
+
+            <div class="decision-label">
+              AI DECISION ENGINE
+            </div>
+
+            <div
+              class="decision-value"
+              id="decision"
+            >
+              WAIT
+            </div>
+
+            <div class="muted">
+              Signal confidence
+            </div>
+
+            <div class="confidence">
+
+              <div class="confidence-label">
+
+                <span>Confidence</span>
+
+                <span id="confidenceValue">
+                  0%
+                </span>
+
+              </div>
+
+              <div class="confidence-bar">
+
+                <div
+                  class="confidence-fill"
+                  id="confidenceBar"
+                ></div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+
+      <!-- MARKET CATEGORIES -->
+      <section class="market-grid">
+
+        <!-- STOCKS -->
+        <div class="market-card">
+
+          <h3>📈 STOCKS</h3>
+
+          <div
+            class="market-value"
+            id="stocksStatus"
+          >
+            LIVE
+          </div>
+
+          <small>
+            Amazon and other stocks
+          </small>
+
+        </div>
+
+
+        <!-- CURRENCY -->
+        <div class="market-card">
+
+          <h3>💱 CURRENCY</h3>
+
+          <div
+            class="market-value"
+            id="currencyStatus"
+          >
+            LIVE
+          </div>
+
+          <small>
+            EUR/USD • GBP/USD
+          </small>
+
+        </div>
+
+
+        <!-- CRYPTO -->
+        <div class="market-card">
+
+          <h3>₿ CRYPTO</h3>
+
+          <div
+            class="market-value"
+            id="cryptoStatus"
+          >
+            LIVE
+          </div>
+
+          <small>
+            BTC/USD and crypto markets
+          </small>
+
+        </div>
+
+      </section>
+
+
+      <!-- FOOTER -->
+      <footer>
+
+        <p>
+          Fiachra's Trading Terminal
+        </p>
+
+        <p class="muted">
+          Market dashboard for educational purposes.
+          Not financial advice.
+        </p>
+
+      </footer>
+
+    </main>
+
+  </div>
+
+</div>
+
+
+<!-- JAVASCRIPT -->
+<script src="app.js"></script>
 
 </body>
 </html>
