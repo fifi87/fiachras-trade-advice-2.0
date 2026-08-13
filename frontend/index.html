@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Fiachra's Tradin</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="topbar">
+  <div class="brand">Fiachra's <span>Tradin</span><small>Founded by Fiachra Gardner</small></div>
+  <div id="marketStatus" class="status"><i></i> Connecting</div>
+  <input id="symbolSearch" class="search" value="AMZN" placeholder="Search AMZN, AAPL, EURUSD…">
+  <button id="searchBtn" class="btn">Search</button>
+</header>
+
+<div class="layout">
+<aside class="sidebar">
+  <button class="active">▦</button><button>◈</button><button>⌁</button><button>☆</button><button>⚙</button>
+</aside>
+
+<main>
+  <section class="hero">
+    <div><div class="eyebrow">MARKET TERMINAL</div><h1 id="symbol">AMZN</h1><p id="assetName">Amazon.com, Inc.</p></div>
+    <div class="heroPrice"><strong id="price">—</strong><span id="change">—</span></div>
+    <div class="marketTime"><span>Market</span><b id="session">Loading…</b><small id="updated">—</small></div>
+  </section>
+
+  <div class="tabs"><button class="active">Overview</button><button>Stocks</button><button>Forex</button><button>Indices</button></div>
+
+  <section class="grid">
+    <div class="panel chartPanel">
+      <div class="panelHead"><b>Price chart</b><span id="feedLabel">Live data feed</span></div>
+      <div class="stats"><span>Open <b id="open">—</b></span><span>High <b id="high">—</b></span><span>Low <b id="low">—</b></span><span>Volume <b id="volume">—</b></span></div>
+      <canvas id="chart"></canvas>
+    </div>
+
+    <aside class="right">
+      <div class="panel">
+        <div class="panelHead"><b>Watchlist</b><span>LIVE</span></div>
+        <div id="watchlist"></div>
+      </div>
+      <div class="panel decision">
+        <div class="eyebrow">MARKET SIGNAL</div>
+        <h2 id="signal">WAIT</h2>
+        <div class="confidence"><span>Confidence</span><b id="confidence">—</b></div>
+        <div class="bar"><i id="bar"></i></div>
+        <div class="row"><span>Trend</span><b id="trend">—</b></div>
+        <div class="row"><span>Momentum</span><b id="momentum">—</b></div>
+      </div>
+    </aside>
+  </section>
+
+  <div class="notice">
+    <b>Data safety:</b> API keys belong on the backend, never in this frontend or a public GitHub repository.
+    Until the backend is connected, this interface will clearly show that live data is unavailable rather than inventing prices.
+  </div>
+  <footer>Fiachra's Tradin • Founded by Fiachra Gardner • Educational market dashboard, not financial advice.</footer>
+</main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>
