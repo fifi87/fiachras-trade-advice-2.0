@@ -63,25 +63,51 @@ app.get("/api/quote", async (req, res) => {
     });
 
   }
+  const url = `https://finnhub.io/api/v1/quote?symbol=${encodeURIComponent(symbol)}&token=${process.env.MARKET_DATA_API_KEY}`;
 
-  /*
-    The provider adapter will be added next.
+  try {
+    const response = await fetch(url);
 
-    It will handle:
+    if (!response.ok) {
+      return res.status(502).json({
+        error: "Market data provider request failed.",
+        symbol: symbol,
+        live: false
+      });
+    }
 
-      Stocks
-      Amazon (AMZN)
-      Forex
-      Indices
-      Crypto
-  */
+    const data = await response.json();
 
-  return res.status(501).json({
-    error: "Market-data provider adapter not installed yet.",
-    symbol: symbol,
-    live: false
-  });
-});
+    if (!data || typeof data.c !== "number") {
+      return res.status(502).json({
+        error: "No valid market data returned.",
+        symbol: symbol,
+        live: false
+      });
+    }
+
+    return res.json({
+      symbol: symbol,
+      price: data.c,
+      change: data.d,
+      changePercent: data.dp,
+      high: data.h,
+      low: data.l,
+      open: data.o,
+      previousClose: data.pc,
+      live: true
+    });
+
+  } catch (error) {
+    console.error("Finnhub request failed:", error);
+
+    return res.status(500).json({
+      error: "Unable to fetch market data.",
+      symbol: symbol,
+      live: false
+    });
+  }
+
 
 
 // --------------------------------------------------
