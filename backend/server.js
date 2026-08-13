@@ -105,8 +105,10 @@ app.get("/api/quote", async (req, res) => {
       error: "Unable to fetch market data.",
       symbol: symbol,
       live: false
-    });
-  }
+      });
+}
+});
+
 
 
 
